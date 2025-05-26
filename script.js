@@ -6,10 +6,10 @@ window.onload = function () {
   fetch("https://script.google.com/macros/s/AKfycbyn2TPipGZkeOCotZtSaFunsZrfmrT1HGP1A3iE3P16XQwADurfDy1IXt_B-He5oSW4/exec")
     .then(res => res.json())
     .then(data => {
+	.then(res => res.json())
+    .then(data => {
       isiDropdown("penguji", data.penguji);
       isiDropdown("kelas", data.kelas);
-      isiDropdown("surat", data.surat);
-      isiDropdown("keterangan", data.keterangan);
       globalSiswaPerKelas = data.siswaPerKelas;
 
       document.getElementById("kelas").addEventListener("change", function () {
@@ -18,6 +18,7 @@ window.onload = function () {
         isiDropdown("siswa", siswaKelas);
       });
 
+      // trigger awal
       document.getElementById("kelas").dispatchEvent(new Event("change"));
     });
 };
