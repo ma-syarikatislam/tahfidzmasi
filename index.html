@@ -86,19 +86,17 @@
     fetch(sheetCSV)
       .then(res => res.text())
       .then(text => {
-        const rows = text.split("\n").map(r => r.split(","));
+        const rows = text.trim().split("\n").map(r => r.split(","));
         const header = rows[0];
-        headerSurat = header.slice(2); // Kolom C1 dan seterusnya = nama surat
-        const dataRows = rows.slice(1); // Data mulai dari baris ke-2
+        headerSurat = header.slice(2); // kolom C1 dan seterusnya
 
-        siswaData = dataRows
-          .filter(row => row.length >= 2 && row[0] && row[1]) // pastikan ada kelas & nama
-          .map(row => ({
-            kelas: row[0].trim(),
-            nama: row[1].trim()
-          }));
+        const dataRows = rows.slice(1).filter(row => row[0] && row[1]); // pastikan kolom A & B terisi
+        siswaData = dataRows.map(row => ({
+          kelas: row[0].trim(),
+          nama: row[1].trim()
+        }));
 
-        // Penguji ? hardcoded atau bisa diganti ambil dari sheet penguji
+        // Isi dropdown penguji
         const pengujiList = ["Iwang Wahyu, S.Pd.I", "Siti Aminah", "Ahmad F", "Nurul F"];
         pengujiList.forEach(name => {
           const opt = document.createElement('option');
@@ -108,14 +106,15 @@
         });
 
         // Ambil kelas unik
-        const kelasSet = new Set(siswaData.map(item => item.kelas));
-        kelasSet.forEach(kelas => {
+        const kelasUnik = [...new Set(siswaData.map(s => s.kelas))];
+        kelasUnik.forEach(kelas => {
           const opt = document.createElement('option');
           opt.value = kelas;
           opt.textContent = kelas;
           kelasSelect.appendChild(opt);
         });
 
+        // Render list surat
         renderSuratList();
       });
 
