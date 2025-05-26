@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Penilaian Tahfidz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: auto;
+      padding: 1rem;
+    }
+    h1 {
+      text-align: center;
+    }
+    label, select, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .surat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #ddd;
+      padding: 0.5rem 0;
+    }
+    .radio-group {
+      display: none;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+    .hamburger {
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      font-size: 1.5rem;
+    }
+    button {
+      background-color: green;
+      color: white;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Penilaian Tahfidz</h1>
+
+  <label for="penguji">Nama Penguji</label>
+  <select id="penguji"></select>
+
+  <label for="kelas">Kelas</label>
+  <select id="kelas"></select>
+
+  <label for="siswa">Nama Siswa</label>
+  <select id="siswa"></select>
+
+  <div id="surat-list"></div>
+
+  <button onclick="submitData()">Kirim</button>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwulUCkx_BBeCwcH6JmwPvGxxOf_2xTPlr2HUdE57ocA0H6pXdU9BFJ2OepG_MismuRnw/exec";
+    const sheetCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQD2YcUVKH2yWyRmAwS99LD8C_epY2JFALaUs4z4yVt4Q0gQwOhsO7MWgVP0qE6tPQ_NqOBkFi2twyM/pub?output=csv";
+
+    const pengujiSelect = document.getElementById('penguji');
+    const kelasSelect = document.getElementById('kelas');
+    const siswaSelect = document.getElementById('siswa');
+    const suratList = document.getElementById('surat-list');
+
+    let siswaData = [];
+    let headerSurat = [];
+
+    // Fetch and parse CSV
+    fetch(sheetCSV)
+      .then(res => res.text())
+      .then(text => {
+        const rows = text.split("\n").map(r => r.split(","));
+        headerSurat = rows[0].slice(2);
+        siswaData = rows.slice(1).map(row => ({
+          kelas: row[0],
+          nama: row[1]
+        }));
+        loadPenguji(rows);
+        loadKelas(rows);
+        renderSuratList();
+      });
+
+    function loadPenguji(rows) {
+      const pengujiList = rows.slice(1, 5).map(r => r[1]); // B2 to B5 dari sheet penguji
+      pengujiList.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        pengujiSelect.appendChild(option);
+      });
+    }
+
+    function loadKelas(rows) {
+      const kelasSet = new Set();
+      siswaData.forEach(item => kelasSet.add(item.kelas));
+      kelasSet.forEach(kelas => {
+        const option = document.createElement('option');
+        option.value = kelas;
+        option.textContent = kelas;
+        kelasSelect.appendChild(option);
+      });
+    }
+
+    kelasSelect.addEventListener('change', () => {
+      const selectedKelas = kelasSelect.value;
+      siswaSelect.innerHTML = '';
+      const siswaKelas = siswaData.filter(s => s.kelas === selectedKelas);
+      siswaKelas.forEach(s => {
+        const option = document.createElement('option');
+        option.value = s.nama;
+        option.textContent = s.nama;
+        siswaSelect.appendChild(option);
+      });
+    });
+
+    function renderSuratList() {
+      suratList.innerHTML = '';
+      headerSurat.forEach((surat, index) => {
+        const div = document.createElement('div');
+        div.className = 'surat-item';
+        div.innerHTML = `
+          <span>${surat}</span>
+          <span class="hamburger" onclick="toggleRadio(${index})">&#9776;</span>
+        `;
+        const radios = document.createElement('div');
+        radios.className = 'radio-group';
+        radios.id = 'radio-' + index;
+        radios.innerHTML = `
+          <label><input type="radio" name="surat-${index}" value="M"> M</label>
+          <label><input type="radio" name="surat-${index}" value="J"> J</label>
+          <label><input type="radio" name="surat-${index}" value="FT"> FT</label>
+        `;
+        suratList.appendChild(div);
+        suratList.appendChild(radios);
+      });
+    }
+
+    function toggleRadio(index) {
+      const radios = document.getElementById('radio-' + index);
+      radios.style.display = radios.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function submitData() {
+      const penguji = pengujiSelect.value;
+      const kelas = kelasSelect.value;
+      const siswa = siswaSelect.value;
+
+      const nilaiSurat = {};
+      headerSurat.forEach((surat, index) => {
+        const val = document.querySelector(`input[name="surat-${index}"]:checked`);
+        if (val) {
+          nilaiSurat[surat] = `${val.value} (${penguji})`;
+        }
+      });
+
+      const data = {
+        penguji,
+        kelas,
+        siswa,
+        nilai: nilaiSurat
+      };
+
+      fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(response => alert("Data berhasil dikirim!"))
+      .catch(error => alert("Gagal mengirim: " + error.message));
+    }
+  </script>
+</body>
+</html>
