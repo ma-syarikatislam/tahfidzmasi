@@ -15,7 +15,7 @@
       body: new URLSearchParams(data),
     })
     .then(response => response.text())
-   .then(result => {
+    .then(result => {
   tampilkanModal("Data berhasil dikirim!");
 
   // Reset form
