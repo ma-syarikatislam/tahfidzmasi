@@ -15,11 +15,23 @@
       body: new URLSearchParams(data),
     })
     .then(response => response.text())
-    .then(result => {
-      alert("Data berhasil dikirim!");
-    })
-    .catch(error => {
-      alert("Gagal mengirim data.");
-      console.error(error);
-    });
-  });
+   .then(result => {
+  tampilkanModal("Data berhasil dikirim!");
+
+  // Reset form
+  document.getElementById("penguji").value = "";
+  document.getElementById("kelas").value = "";
+  document.getElementById("siswa").value = "";
+  document.getElementById("surat").value = "";
+  document.getElementById("keterangan").value = "";
+  document.getElementById("catatan").value = "";
+
+  button.disabled = false;
+  button.textContent = "Kirim";
+})
+.catch(error => {
+  tampilkanModal("Gagal mengirim data.");
+  console.error(error);
+  button.disabled = false;
+  button.textContent = "Kirim";
+});
