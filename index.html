@@ -13,11 +13,21 @@
     }
     h1 {
       text-align: center;
+      font-size: 1.5rem;
     }
-    label, select, button {
+    label {
+      margin-top: 1rem;
       display: block;
+      font-weight: bold;
+    }
+    select, button {
       width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      margin-top: 0.5rem;
       margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
     .surat-item {
       display: flex;
@@ -40,10 +50,7 @@
     button {
       background-color: green;
       color: white;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 8px;
+      font-weight: bold;
       cursor: pointer;
     }
   </style>
@@ -76,41 +83,41 @@
     let siswaData = [];
     let headerSurat = [];
 
-    // Fetch and parse CSV
     fetch(sheetCSV)
       .then(res => res.text())
       .then(text => {
         const rows = text.split("\n").map(r => r.split(","));
-        headerSurat = rows[0].slice(2);
-        siswaData = rows.slice(1).map(row => ({
-          kelas: row[0],
-          nama: row[1]
-        }));
-        loadPenguji(rows);
-        loadKelas(rows);
+        const header = rows[0];
+        headerSurat = header.slice(2); // Kolom C1 dan seterusnya = nama surat
+        const dataRows = rows.slice(1); // Data mulai dari baris ke-2
+
+        siswaData = dataRows
+          .filter(row => row.length >= 2 && row[0] && row[1]) // pastikan ada kelas & nama
+          .map(row => ({
+            kelas: row[0].trim(),
+            nama: row[1].trim()
+          }));
+
+        // Penguji ? hardcoded atau bisa diganti ambil dari sheet penguji
+        const pengujiList = ["Iwang Wahyu, S.Pd.I", "Siti Aminah", "Ahmad F", "Nurul F"];
+        pengujiList.forEach(name => {
+          const opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name;
+          pengujiSelect.appendChild(opt);
+        });
+
+        // Ambil kelas unik
+        const kelasSet = new Set(siswaData.map(item => item.kelas));
+        kelasSet.forEach(kelas => {
+          const opt = document.createElement('option');
+          opt.value = kelas;
+          opt.textContent = kelas;
+          kelasSelect.appendChild(opt);
+        });
+
         renderSuratList();
       });
-
-    function loadPenguji(rows) {
-      const pengujiList = rows.slice(1, 5).map(r => r[1]); // B2 to B5 dari sheet penguji
-      pengujiList.forEach(name => {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        pengujiSelect.appendChild(option);
-      });
-    }
-
-    function loadKelas(rows) {
-      const kelasSet = new Set();
-      siswaData.forEach(item => kelasSet.add(item.kelas));
-      kelasSet.forEach(kelas => {
-        const option = document.createElement('option');
-        option.value = kelas;
-        option.textContent = kelas;
-        kelasSelect.appendChild(option);
-      });
-    }
 
     kelasSelect.addEventListener('change', () => {
       const selectedKelas = kelasSelect.value;
