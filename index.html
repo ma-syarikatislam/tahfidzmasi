@@ -7,16 +7,16 @@
   <style>
     body {
       font-family: sans-serif;
+      background: #f8f8f8;
       margin: 0;
       padding: 0;
-      background: #f8f8f8;
     }
 
     .container {
       max-width: 500px;
       margin: auto;
       padding: 20px;
-      background: white;
+      background: #fff;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       border-radius: 12px;
       margin-top: 30px;
@@ -35,7 +35,6 @@
     }
 
     input[type="text"],
-    select,
     textarea {
       width: 100%;
       padding: 10px;
@@ -65,32 +64,90 @@
     button:hover {
       background-color: #27ae60;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .close-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #2980b9;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Penilaian Tahfidz</h1>
 
-    <label for="penguji">Nama Penguji</label>
-    <input type="text" id="penguji" name="penguji">
+<div class="container">
+  <h1>Penilaian Tahfidz</h1>
 
-    <label for="kelas">Kelas</label>
-    <input type="text" id="kelas" name="kelas">
+  <label for="penguji">Nama Penguji</label>
+  <input type="text" id="penguji">
 
-    <label for="siswa">Nama Siswa</label>
-    <input type="text" id="siswa" name="siswa">
+  <label for="kelas">Kelas</label>
+  <input type="text" id="kelas">
 
-    <label for="surat">Surat</label>
-    <input type="text" id="surat" name="surat">
+  <label for="siswa">Nama Siswa</label>
+  <input type="text" id="siswa">
 
-    <label for="keterangan">Keterangan</label>
-    <input type="text" id="keterangan" name="keterangan">
+  <label for="surat">Surat</label>
+  <input type="text" id="surat">
 
-    <label for="catatan">Catatan:</label>
-    <textarea id="catatan" name="catatan"></textarea>
+  <label for="keterangan">Keterangan</label>
+  <input type="text" id="keterangan">
 
-    <button type="submit">Kirim</button>
+  <label for="catatan">Catatan:</label>
+  <textarea id="catatan"></textarea>
+
+  <button id="submitBtn">Kirim</button>
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <p id="modal-message">Pesan...</p>
+    <button class="close-btn" onclick="tutupModal()">Tutup</button>
   </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+  function tampilkanModal(pesan) {
+    document.getElementById("modal-message").innerText = pesan;
+    document.getElementById("modal").style.display = "block";
+  }
+
+  function tutupModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+</script>
 <script src="script.js"></script>
 </body>
 </html>
