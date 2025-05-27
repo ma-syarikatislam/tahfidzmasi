@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -127,112 +126,15 @@
 </div>
 
 <script>
-  window.addEventListener('DOMContentLoaded', init);
-
-  function init() {
-    Tabletop.init({
-      key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK77Wvn8oAEy_MEwguf7TuZfBQ2hI3C6zy9qeJX_Oo-PvSi_sypKI1El9ziqIDDG0UusfQ91njp39J/pub?output=csv',
-      simpleSheet: true,
-      callback: populateDropdowns
-    });
-  }
-
-  function populateDropdowns(data) {
-    const pengujiSet = new Set();
-    const kelasSet = new Set();
-    const siswaSet = new Set();
-    const suratSet = new Set();
-    const ketSet = new Set();
-
-    data.forEach(row => {
-      if (row.Penguji) pengujiSet.add(row.Penguji);
-      if (row.Kelas) kelasSet.add(row.Kelas);
-      if (row.Siswa) siswaSet.add(row.Siswa);
-      if (row.Surat) suratSet.add(row.Surat);
-      if (row.Keterangan) ketSet.add(row.Keterangan);
-    });
-
-    fillSelect('penguji', pengujiSet);
-    fillSelect('kelas', kelasSet);
-    fillSelect('siswa', siswaSet);
-    fillSelect('surat', suratSet);
-    fillSelect('keterangan', ketSet);
-  }
-
-  function fillSelect(id, dataSet) {
-    const select = document.getElementById(id);
-    select.innerHTML = '<option value="">Pilih...</option>';
-    dataSet.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      select.appendChild(option);
-    });
-  }
-</script>
-
-
-<script>
-  window.addEventListener('DOMContentLoaded', init);
-
-  function init() {
-    Tabletop.init({
-      key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK77Wvn8oAEy_MEwguf7TuZfBQ2hI3C6zy9qeJX_Oo-PvSi_sypKI1El9ziqIDDG0UusfQ91njp39J/pub?output=csv',
-      simpleSheet: true,
-      callback: populateDropdowns
-    });
-  }
-
-  function populateDropdowns(data) {
-    const pengujiSet = new Set();
-    const kelasSet = new Set();
-    const siswaSet = new Set();
-    const suratSet = new Set();
-    const ketSet = new Set();
-
-    data.forEach(row => {
-      if (row.Penguji) pengujiSet.add(row.Penguji);
-      if (row.Kelas) kelasSet.add(row.Kelas);
-      if (row.Siswa) siswaSet.add(row.Siswa);
-      if (row.Surat) suratSet.add(row.Surat);
-      if (row.Keterangan) ketSet.add(row.Keterangan);
-    });
-
-    fillSelect('penguji', pengujiSet);
-    fillSelect('kelas', kelasSet);
-    fillSelect('siswa', siswaSet);
-    fillSelect('surat', suratSet);
-    fillSelect('keterangan', ketSet);
-  }
-
-  function fillSelect(id, dataSet) {
-    const select = document.getElementById(id);
-    select.innerHTML = '<option value="">Pilih...</option>';
-    dataSet.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      select.appendChild(option);
-    });
-  }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.4/tabletop.min.js"></script>
-<script>
-  window.addEventListener('DOMContentLoaded', init);
-
-  function init() {
+  window.addEventListener('DOMContentLoaded', function () {
     Tabletop.init({
       key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK77Wvn8oAEy_MEwguf7TuZfBQ2hI3C6zy9qeJX_Oo-PvSi_sypKI1El9ziqIDDG0UusfQ91njp39J/pubhtml',
       callback: populateAllData,
       simpleSheet: false
     });
-  }
+  });
 
-  const siswaData = {
-    "Kelas X": [],
-    "Kelas XI": [],
-    "Kelas XII": []
-  };
+  const siswaData = {};
 
   function populateAllData(data) {
     const pengujiSheet = data["Penguji"]?.elements || [];
@@ -245,16 +147,15 @@
     fillSelect("surat", new Set(suratSheet.map(row => row.Nama)));
     fillSelect("keterangan", new Set(ketSheet.map(row => row.Nama)));
 
-    ["Kelas X", "Kelas XI", "Kelas XII"].forEach(kelas => {
-      if (data[kelas]) {
-        siswaData[kelas] = data[kelas].elements.map(row => row.Nama);
+    Object.keys(data).forEach(sheetName => {
+      if (sheetName.startsWith("Kelas ")) {
+        siswaData[sheetName] = data[sheetName].elements.map(row => row.Nama);
       }
     });
 
     document.getElementById("kelas").addEventListener("change", function () {
       const kelas = this.value;
-      const siswaList = siswaData[kelas] || [];
-      fillSelect("siswa", new Set(siswaList));
+      fillSelect("siswa", new Set(siswaData[kelas] || []));
     });
   }
 
@@ -269,6 +170,7 @@
     });
   }
 </script>
+
 <script src="script.js"></script>
 
 </body>
