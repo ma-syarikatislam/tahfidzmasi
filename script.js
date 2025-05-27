@@ -1,5 +1,14 @@
 const button = document.getElementById("submitBtn");
 
+function showModal(message) {
+  document.getElementById("modal-message").innerText = message;
+  document.getElementById("modal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
 button.addEventListener("click", function(e) {
   e.preventDefault();
 
@@ -11,7 +20,7 @@ button.addEventListener("click", function(e) {
   const catatan = document.getElementById("catatan").value.trim();
 
   if (!penguji || !kelas || !siswa || !surat || !keterangan) {
-    tampilkanModal("Mohon isi semua kolom wajib.");
+    showModal("Mohon isi semua kolom wajib.");
     return;
   }
 
@@ -26,9 +35,8 @@ button.addEventListener("click", function(e) {
   })
   .then(response => response.text())
   .then(result => {
-    tampilkanModal("Data berhasil dikirim!");
+    showModal("Data berhasil dikirim!");
 
-    // Reset form
     document.getElementById("penguji").value = "";
     document.getElementById("kelas").value = "";
     document.getElementById("siswa").value = "";
@@ -40,7 +48,7 @@ button.addEventListener("click", function(e) {
     button.textContent = "Kirim";
   })
   .catch(error => {
-    tampilkanModal("Gagal mengirim data.");
+    showModal("Gagal mengirim data.");
     console.error(error);
     button.disabled = false;
     button.textContent = "Kirim";

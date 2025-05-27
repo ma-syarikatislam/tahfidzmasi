@@ -11,7 +11,6 @@
       margin: 0;
       padding: 0;
     }
-
     .container {
       max-width: 500px;
       margin: auto;
@@ -21,19 +20,16 @@
       border-radius: 12px;
       margin-top: 30px;
     }
-
     h1 {
       text-align: center;
       color: #2c3e50;
       margin-bottom: 30px;
     }
-
     label {
       display: block;
       margin-bottom: 6px;
       font-weight: bold;
     }
-
     input[type="text"],
     textarea {
       width: 100%;
@@ -44,12 +40,10 @@
       font-size: 16px;
       box-sizing: border-box;
     }
-
     textarea {
       height: 100px;
       resize: vertical;
     }
-
     button {
       width: 100%;
       padding: 12px;
@@ -60,12 +54,9 @@
       font-size: 18px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #27ae60;
     }
-
-    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
@@ -76,7 +67,6 @@
       overflow: auto;
       background-color: rgba(0,0,0,0.5);
     }
-
     .modal-content {
       background-color: white;
       margin: 15% auto;
@@ -86,7 +76,6 @@
       max-width: 400px;
       text-align: center;
     }
-
     .close-btn {
       margin-top: 20px;
       padding: 10px 20px;
@@ -97,7 +86,6 @@
       font-size: 16px;
       cursor: pointer;
     }
-
     .close-btn:hover {
       background-color: #2980b9;
     }
@@ -129,25 +117,13 @@
   <button id="submitBtn">Kirim</button>
 </div>
 
-<!-- Modal -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <p id="modal-message">Pesan...</p>
-    <button class="close-btn" onclick="tutupModal()">Tutup</button>
+    <button class="close-btn" onclick="closeModal()">Tutup</button>
   </div>
 </div>
 
 <script src="script.js"></script>
-<script>
-  function tampilkanModal(pesan) {
-    document.getElementById("modal-message").innerText = pesan;
-    document.getElementById("modal").style.display = "block";
-  }
-
-  function tutupModal() {
-    document.getElementById("modal").style.display = "none";
-  }
-</script>
-
 </body>
 </html>
