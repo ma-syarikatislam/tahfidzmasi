@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penilaian Tahfidz</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Penilaian Hafalan Quran</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="container">
-        <h2>Penilaian Tahfidz</h2>
-        <form id="tahfidzForm">
-            <label for="penguji">Nama Penguji</label>
-            <select id="penguji" required>
-                <option value="">Pilih Penguji</option>
-                <option value="Ustadz A">Ustadz A</option>
-                <option value="Ustadzah B">Ustadzah B</option>
+        <h1>Penilaian Tahfidz</h1>
+
+        <form id="penilaianForm">
+            <!-- Kotak 1: Nama Penguji -->
+            <label for="penguji">Nama Penguji:</label>
+            <select id="penguji" name="penguji" required>
+                <option value="" disabled selected>Memuat...</option>
             </select>
 
-            <label for="kelas">Kelas</label>
-            <select id="kelas" required>
-                <option value="">Pilih Kelas</option>
-                <option value="X">X</option>
-                <option value="XI">XI</option>
-                <option value="XII">XII</option>
+            <!-- Kotak 2: Kelas -->
+            <label for="kelas">Kelas:</label>
+            <select id="kelas" name="kelas" required>
+                <option value="" disabled selected>Pilih Kelas</option>
             </select>
 
-            <label for="siswa">Nama Siswa</label>
-            <select id="siswa" required>
-                <option value="">Pilih Siswa</option>
+            <!-- Kotak 3: Nama Siswa (berubah sesuai kelas) -->
+            <label for="siswa">Nama Siswa:</label>
+            <select id="siswa" name="siswa" required>
+                <option value="" disabled selected>Pilih kelas dulu</option>
             </select>
 
-            <label for="surat">Surat</label>
-            <select id="surat" required>
-                <option value="">Pilih Surat</option>
-                <option value="Al-Fatihah">Al-Fatihah</option>
-                <option value="Al-Baqarah">Al-Baqarah</option>
+            <!-- Kotak 4: Surat -->
+            <label for="surat">Surat:</label>
+            <select id="surat" name="surat" required>
+                <option value="" disabled selected>Pilih Surat</option>
+            </select>
+            
+            <!-- Tambahkan setelah field Surat -->
+            <label for="keterangan">Keterangan:</label>
+            <select id="keterangan" name="keterangan" required>
+                <option value="" disabled selected>Pilih Keterangan</option>
             </select>
 
-            <label for="keterangan">Keterangan</label>
-            <select id="keterangan" required>
-                <option value="">Pilih Keterangan</option>
-                <option value="Lancar">Lancar</option>
-                <option value="Kurang Lancar">Kurang Lancar</option>
-                <option value="Mengulang">Mengulang</option>
-            </select>
+            <!-- Kotak 5: Catatan -->
+            <label for="keterangan">Catatan:</label>
+            <textarea id="keterangan" name="keterangan" rows="4" placeholder="Tulis catatan di sini..." required></textarea>
 
-            <label for="catatan">Catatan:</label>
-            <textarea id="catatan" rows="4"></textarea>
-
+            <!-- Tombol Kirim -->
             <button type="submit">Kirim</button>
         </form>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
