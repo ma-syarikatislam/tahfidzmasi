@@ -45,11 +45,14 @@ document.getElementById('kelas').addEventListener('change', function () {
 function showModal(message) {
   document.getElementById("modal-message").innerText = message;
   document.getElementById("modal").style.display = "block";
+  document.getElementById("overlay").style.display = "block"; // tampilkan overlay
 }
 
 function closeModal() {
   document.getElementById("modal").style.display = "none";
+  document.getElementById("overlay").style.display = "none"; // sembunyikan overlay
 }
+
 
 // Submit
 const button = document.getElementById("submitBtn");
