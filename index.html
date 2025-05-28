@@ -1,177 +1,56 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Penilaian Tahfidz</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f8f8f8;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
-      background: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      border-radius: 12px;
-      margin-top: 30px;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 30px;
-    }
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 18px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    textarea {
-      height: 100px;
-      resize: vertical;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background-color: #2ecc71;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #27ae60;
-    }
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.5);
-    }
-    .modal-content {
-      background-color: white;
-      margin: 15% auto;
-      padding: 20px;
-      border-radius: 10px;
-      width: 80%;
-      max-width: 400px;
-      text-align: center;
-    }
-    .close-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .close-btn:hover {
-      background-color: #2980b9;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.4/tabletop.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penilaian Tahfidz</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h2>Penilaian Tahfidz</h2>
+        <form id="tahfidzForm">
+            <label for="penguji">Nama Penguji</label>
+            <select id="penguji" required>
+                <option value="">Pilih Penguji</option>
+                <option value="Ustadz A">Ustadz A</option>
+                <option value="Ustadzah B">Ustadzah B</option>
+            </select>
 
-<div class="container">
-  <h1>Penilaian Tahfidz</h1>
+            <label for="kelas">Kelas</label>
+            <select id="kelas" required>
+                <option value="">Pilih Kelas</option>
+                <option value="X">X</option>
+                <option value="XI">XI</option>
+                <option value="XII">XII</option>
+            </select>
 
-  <label for="penguji">Nama Penguji</label>
-  <select id="penguji"></select>
+            <label for="siswa">Nama Siswa</label>
+            <select id="siswa" required>
+                <option value="">Pilih Siswa</option>
+            </select>
 
-  <label for="kelas">Kelas</label>
-  <select id="kelas"></select>
+            <label for="surat">Surat</label>
+            <select id="surat" required>
+                <option value="">Pilih Surat</option>
+                <option value="Al-Fatihah">Al-Fatihah</option>
+                <option value="Al-Baqarah">Al-Baqarah</option>
+            </select>
 
-  <label for="siswa">Nama Siswa</label>
-  <select id="siswa"></select>
+            <label for="keterangan">Keterangan</label>
+            <select id="keterangan" required>
+                <option value="">Pilih Keterangan</option>
+                <option value="Lancar">Lancar</option>
+                <option value="Kurang Lancar">Kurang Lancar</option>
+                <option value="Mengulang">Mengulang</option>
+            </select>
 
-  <label for="surat">Surat</label>
-  <select id="surat"></select>
+            <label for="catatan">Catatan:</label>
+            <textarea id="catatan" rows="4"></textarea>
 
-  <label for="keterangan">Keterangan</label>
-  <select id="keterangan"></select>
-
-  <label for="catatan">Catatan:</label>
-  <textarea id="catatan"></textarea>
-
-  <button id="submitBtn">Kirim</button>
-</div>
-
-<div id="modal" class="modal">
-  <div class="modal-content">
-    <p id="modal-message">Pesan...</p>
-    <button class="close-btn" onclick="closeModal()">Tutup</button>
-  </div>
-</div>
-
-<script>
-  window.addEventListener('DOMContentLoaded', function () {
-    Tabletop.init({
-      key: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRK77Wvn8oAEy_MEwguf7TuZfBQ2hI3C6zy9qeJX_Oo-PvSi_sypKI1El9ziqIDDG0UusfQ91njp39J/pubhtml',
-      callback: populateAllData,
-      simpleSheet: false
-    });
-  });
-
-  const siswaData = {};
-
-  function populateAllData(data) {
-    const pengujiSheet = data["Penguji"]?.elements || [];
-    const kelasSheet = data["Kelas"]?.elements || [];
-    const suratSheet = data["Surat"]?.elements || [];
-    const ketSheet = data["Keterangan"]?.elements || [];
-
-    fillSelect("penguji", new Set(pengujiSheet.map(row => row.Nama)));
-    fillSelect("kelas", new Set(kelasSheet.map(row => row.Nama)));
-    fillSelect("surat", new Set(suratSheet.map(row => row.Nama)));
-    fillSelect("keterangan", new Set(ketSheet.map(row => row.Nama)));
-
-    Object.keys(data).forEach(sheetName => {
-      if (sheetName.startsWith("Kelas ")) {
-        siswaData[sheetName] = data[sheetName].elements.map(row => row.Nama);
-      }
-    });
-
-    document.getElementById("kelas").addEventListener("change", function () {
-      const kelas = this.value;
-      fillSelect("siswa", new Set(siswaData[kelas] || []));
-    });
-  }
-
-  function fillSelect(id, dataSet) {
-    const select = document.getElementById(id);
-    select.innerHTML = '<option value="">Pilih...</option>';
-    dataSet.forEach(item => {
-      const option = document.createElement('option');
-      option.value = item;
-      option.textContent = item;
-      select.appendChild(option);
-    });
-  }
-</script>
-
-<script src="script.js"></script>
-
+            <button type="submit">Kirim</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
