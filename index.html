@@ -1,54 +1,47 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Penilaian Hafalan Quran</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Penilaian Tahfidz</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Penilaian Tahfidz</h1>
 
-        <form id="penilaianForm">
-            <!-- Kotak 1: Nama Penguji -->
-            <label for="penguji">Nama Penguji:</label>
-            <select id="penguji" name="penguji" required>
-                <option value="" disabled selected>Memuat...</option>
-            </select>
+  <div class="container">
+    <h2>Penilaian Tahfidz</h2>
 
-            <!-- Kotak 2: Kelas -->
-            <label for="kelas">Kelas:</label>
-            <select id="kelas" name="kelas" required>
-                <option value="" disabled selected>Pilih Kelas</option>
-            </select>
+    <form id="tahfidzForm">
+      <label for="penguji">Nama Penguji</label>
+      <select id="penguji"></select>
 
-            <!-- Kotak 3: Nama Siswa (berubah sesuai kelas) -->
-            <label for="siswa">Nama Siswa:</label>
-            <select id="siswa" name="siswa" required>
-                <option value="" disabled selected>Pilih kelas dulu</option>
-            </select>
+      <label for="kelas">Kelas</label>
+      <select id="kelas"></select>
 
-            <!-- Kotak 4: Surat -->
-            <label for="surat">Surat:</label>
-            <select id="surat" name="surat" required>
-                <option value="" disabled selected>Pilih Surat</option>
-            </select>
-            
-            <!-- Tambahkan setelah field Surat -->
-            <label for="keterangan">Keterangan:</label>
-            <select id="keterangan" name="keterangan" required>
-                <option value="" disabled selected>Pilih Keterangan</option>
-            </select>
+      <label for="siswa">Nama Siswa</label>
+      <select id="siswa"></select>
 
-            <!-- Kotak 5: Catatan -->
-            <label for="keterangan">Catatan:</label>
-            <textarea id="keterangan" name="keterangan" rows="4" placeholder="Tulis catatan di sini..." required></textarea>
+      <label for="surat">Surat</label>
+      <select id="surat"></select>
 
-            <!-- Tombol Kirim -->
-            <button type="submit">Kirim</button>
-        </form>
+      <label for="keterangan">Keterangan</label>
+      <select id="keterangan"></select>
+
+      <label for="catatan">Catatan:</label>
+      <textarea id="catatan" rows="4"></textarea>
+
+      <button id="submitBtn" type="submit">Kirim</button>
+    </form>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal">
+    <div class="modal-box">
+      <p id="modal-message"></p>
+      <button class="close-btn" onclick="closeModal()">Tutup</button>
     </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
