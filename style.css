@@ -10,20 +10,20 @@
   .container {
     max-width: 500px;
     margin: 40px auto;
+    padding: 30px 20px;
     background-color: #f9f9f9;
-    padding: 30px 40px;
     border-radius: 12px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
   
-  /* Judul form */
+  /* Judul */
   .container h2 {
     text-align: center;
     margin-bottom: 25px;
     color: #333;
   }
   
-  /* Label */
+  /* Label dan input */
   form label {
     display: block;
     margin-bottom: 6px;
@@ -31,7 +31,6 @@
     color: #444;
   }
   
-  /* Select dan textarea */
   form select,
   form textarea {
     width: 100%;
@@ -41,13 +40,13 @@
     border-radius: 6px;
     font-size: 14px;
     background-color: #fff;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s ease;
   }
   
   form select:focus,
   form textarea:focus {
-    outline: none;
     border-color: #007bff;
+    outline: none;
   }
   
   /* Tombol submit */
@@ -67,40 +66,40 @@
     background-color: #0056b3;
   }
   
-  /* Modal overlay */
+  /* MODAL Overlay */
   #modal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
   }
   
-  /* Modal box */
+  /* MODAL Box */
   #modal .modal-box {
-    background-color: #fff;
+    background-color: #ffffff;
     padding: 24px 32px;
     border-radius: 10px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     text-align: center;
-    max-width: 400px;
-    width: 90%;
-    animation: fadeInScale 0.3s ease;
+    max-width: 90%;
+    width: 320px;
+    animation: fadeInScale 0.3s ease-in-out;
   }
   
-  /* Modal message */
+  /* MODAL Text */
   #modal-message {
     font-size: 16px;
-    margin-bottom: 20px;
     color: #333;
+    margin-bottom: 20px;
   }
   
-  /* Modal close button */
+  /* MODAL Button */
   #modal .close-btn {
     background-color: #28a745;
     color: white;
@@ -116,11 +115,11 @@
     background-color: #218838;
   }
   
-  /* Animasi */
+  /* Animasi modal */
   @keyframes fadeInScale {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.95);
     }
     to {
       opacity: 1;
@@ -128,156 +127,25 @@
     }
   }
   
-  /* Responsif untuk layar kecil */
-  @media (max-width: 600px) {
+  /* Responsif mobile */
+  @media (max-width: 480px) {
     .container {
       margin: 20px;
       padding: 20px;
     }
   
+    form label {
+      font-size: 14px;
+    }
+  
+    form select,
+    form textarea {
+      font-size: 13px;
+    }
+  
     button#submitBtn {
       font-size: 15px;
+      padding: 10px;
     }
   }
-/* Reset dasar */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Container utama */
-.container {
-  max-width: 500px;
-  margin: 40px auto;
-  background-color: #f9f9f9;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Judul form */
-.container h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
-}
-
-/* Label */
-form label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  color: #444;
-}
-
-/* Select dan textarea */
-form select,
-form textarea {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  background-color: #fff;
-  transition: border-color 0.2s;
-}
-
-form select:focus,
-form textarea:focus {
-  outline: none;
-  border-color: #007bff;
-}
-
-/* Tombol submit */
-button#submitBtn {
-  width: 100%;
-  background-color: #007bff;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-button#submitBtn:hover {
-  background-color: #0056b3;
-}
-
-/* Modal overlay */
-#modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Modal box */
-#modal .modal-box {
-  background-color: #fff;
-  padding: 24px 32px;
-  border-radius: 10px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  animation: fadeInScale 0.3s ease;
-}
-
-/* Modal message */
-#modal-message {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* Modal close button */
-#modal .close-btn {
-  background-color: #28a745;
-  color: white;
-  border: none;
-  padding: 10px 24px;
-  font-size: 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-#modal .close-btn:hover {
-  background-color: #218838;
-}
-
-/* Animasi */
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Responsif untuk layar kecil */
-@media (max-width: 600px) {
-  .container {
-    margin: 20px;
-    padding: 20px;
-  }
-
-  button#submitBtn {
-    font-size: 15px;
-  }
-}
   
